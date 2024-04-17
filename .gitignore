@@ -5,7 +5,9 @@ package-lock.json
 
 raw_data/*
 prepared_data/*
+*.geojson
 
 # Connection credentials
 keys/
 .env
+.DS_Store
