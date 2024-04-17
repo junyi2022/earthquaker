@@ -1,3 +1,6 @@
+
+/data_testing/node_modules
+
 node_modules/
 env/
 *.pyc
@@ -9,3 +12,4 @@ prepared_data/*
 # Connection credentials
 keys/
 .env
+
