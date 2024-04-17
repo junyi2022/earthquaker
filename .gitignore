@@ -8,8 +8,21 @@ package-lock.json
 
 raw_data/*
 prepared_data/*
+
+# Connection credentials
+keys/
+.env
+
+node_modules/
+env/
+*.pyc
+package-lock.json
+
+raw_data/*
+prepared_data/*
 *.geojson
 
 # Connection credentials
 keys/
 .env
+.DS_Store
