@@ -21,6 +21,7 @@ package-lock.json
 raw_data/*
 prepared_data/*
 *.geojson
+*.jsonl
 
 # Connection credentials
 keys/
