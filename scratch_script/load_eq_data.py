@@ -7,8 +7,8 @@ bucket_name = os.getenv('DATA_LAKE_BUCKET')
 dataset_name = os.getenv('DATA_LAKE_DATASET')
 
 # Load the data into BigQuery as an external table
-prepared_blobname = 'prepared/past_month_eq/past_month_earthquakes.jsonl'
-table_name = 'past_month_earthquakes'
+prepared_blobname = ('prepared/world_continent/world_continent.jsonl')
+table_name = 'world_continent'
 table_uri = f'gs://{bucket_name}/{prepared_blobname}'
 
 create_table_query = f'''

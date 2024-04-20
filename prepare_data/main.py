@@ -12,15 +12,16 @@ DIRNAME = pathlib.Path(__file__).parent
 
 @functions_framework.http
 def prepare_earthquake_data(request):
-    raw_filename = DIRNAME / 'past_month_earthquakes.geojson'
-    prepared_filename = DIRNAME / 'past_month_earthquakes.jsonl'
+    raw_filename = DIRNAME / 'past_month_earthquakes_withlatlon.geojson'
+    prepared_filename = DIRNAME / 'past_month_earthquakes_withlatlon.jsonl'
 
     bucket_name = os.getenv('DATA_LAKE_BUCKET')
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
 
     # Download the data from cloud storage
-    raw_blobname = 'raw/past_month_eq/past_month_earthquakes.geojson'
+    raw_blobname = ('raw/past_month_eq/'
+                    'past_month_earthquakes_withlatlon.geojson')
     blob = bucket.blob(raw_blobname)
     blob.download_to_filename(raw_filename)
     print(f'Downloaded {raw_filename}')
@@ -44,7 +45,7 @@ def prepare_earthquake_data(request):
 
     # Upload the prepared data to cloud storage
     prepared_blobname = ('prepared/past_month_eq/'
-                         'past_month_earthquakes.jsonl')
+                         'past_month_earthquakes_withlatlon.jsonl')
     blob = bucket.blob(prepared_blobname)
     blob.upload_from_filename(prepared_filename)
     print(f'Uploaded {prepared_filename} to {bucket_name}')
