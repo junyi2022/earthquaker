@@ -9,6 +9,9 @@ package-lock.json
 raw_data/*
 prepared_data/*
 
+manipulate_properties/past_month_earthquakes.geojson
+manipulate_properties/past_month_earthquakes_withlatlon.geojson
+
 # Connection credentials
 keys/
 key/

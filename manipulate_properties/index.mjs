@@ -3,20 +3,25 @@ import findConfig from 'find-config';
 dotenv.config({ path: findConfig('.env') });
 
 import BigJSON from 'big-json';
-import fs from 'node:fs';
+import fs from 'fs/promises';
+// import { readFile } from 'node:fs';
+import path from 'path';
+import process from 'process';
+import { fileURLToPath } from 'url';
+import { Storage } from '@google-cloud/storage';
+import functions from '@google-cloud/functions-framework';
+
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-console.log(__dirname);
 
 functions.http('manipulate_properties', async (req, res) => {
-  console.log('Changing properties on raw earthquake data...');
-
   const rawFilename = path.join(__dirname, 'past_month_earthquakes.geojson');
-  const preparedFilename = path.join(__dirname, 'past_month_earthquakes_withLatLon.geojson');
+  const preparedFilename = path.join(__dirname, 'past_month_earthquakes_withlatlon.geojson');
 
   const bucketName = process.env.DATA_LAKE_BUCKET;
   const storageClient = new Storage();
   const bucket = storageClient.bucket(bucketName);
+
 
   // Download the raw data from cloud storage
   const rawBlobname = 'raw/past_month_eq/past_month_earthquakes.geojson';
@@ -24,60 +29,26 @@ functions.http('manipulate_properties', async (req, res) => {
   console.log(`Downloaded to ${rawFilename}`);
 
   // Load the data from the geojson file
-  const data = await BigJSON.parse({
-    body: fs.readFileSync(rawFilename)
-  });
+  const rawData = await fs.readFile(rawFilename, 'utf-8');
+  const data = await BigJSON.parse({body: rawData});
 
-  data.features.forEach((feature) => {
+  console.log(`Load ${rawBlobname}`);
+  
+
+  const f = await fs.open(preparedFilename, 'w');
+  for (const feature of data.features) {
     feature.properties.lat = feature.geometry.coordinates[1];
     feature.properties.lon = feature.geometry.coordinates[0];
     feature.properties.alt = feature.geometry.coordinates[2];
     feature.properties.id = feature.geometry.id;
-  });
 
-  const jsonData25 = JSON.stringify(data25);
-  fs.writeFileSync(preparedFilename, jsonData25);
-
+  }
+  await f.write(JSON.stringify(data));
 
   console.log(`Processed data into ${preparedFilename}`);
 
-  // Upload the prepared data to cloud storage
-  const preparedBlobname = 'raw/past_month_eq/past_month_earthquakes_withLatLon.geojson';
-  await bucket.upload(preparedFilename, { destination: preparedBlobname });
-  console.log(`Uploaded to ${preparedBlobname}`);
-
-  res.send(`Processed and uploaded gs://${bucketName}/${preparedBlobname}`);
+  // Upload the prepared data to Google Cloud Storage
+  const preparedBlobName = 'raw/past_month_eq/past_month_earthquakes_withlatlon.geojson';
+  await bucket.upload(preparedFilename, { destination: preparedBlobName });
+  console.log(`Uploaded to ${preparedBlobName}`);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const data25 = await BigJSON.parse({
-    body: fs.readFileSync('./2.5_month.geojson')
-});
-
-data25.features.forEach((feature) => {
-  feature.properties.lat = feature.geometry.coordinates[1];
-  feature.properties.lon = feature.geometry.coordinates[0];
-  feature.properties.alt = feature.geometry.coordinates[2];
-  feature.properties.id = feature.geometry.id;
-});
-
-const jsonData25 = JSON.stringify(data25);
-fs.writeFileSync('2.5_month_withlatlon.geojson', jsonData25);

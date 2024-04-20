@@ -13,8 +13,8 @@ gcloud functions deploy manipulate_properties `
 --entry-point=manipulate_properties `
 --service-account=data-pipeline-robot-2024@earthquakers.iam.gserviceaccount.com `
 --set-env-vars='DATA_LAKE_BUCKET=earthquakeclouddata' `
---memory=4Gi `
---timeout=240s `
+--memory=12Gi `
+--timeout=1500s `
 --no-allow-unauthenticated `
 --trigger-http
 
@@ -39,7 +39,10 @@ gcloud functions deploy prepare_eq_data `
 
 gcloud functions call prepare_eq_data --project=earthquakers --region=us-east1
 
+gcloud functions call manipulate_properties --project=earthquakers --region=us-east1
+
 gcloud functions logs read prepare_eq_data --project=earthquakers --region=us-east1
+
 
 gcloud functions add-invoker-policy-binding prepare_eq_data `
 --region="us-east1" `

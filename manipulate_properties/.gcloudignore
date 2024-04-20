@@ -14,3 +14,6 @@
 .gitignore
 
 node_modules
+
+past_month_earthquakes.geojson
+past_month_earthquakes_withlatlon.geojson
