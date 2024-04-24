@@ -9,7 +9,7 @@ gcloud functions deploy load_earthquake_data \
 --service-account=data-pipeline-robot-2024@earthquakers.iam.gserviceaccount.com	 \
 --memory=8Gi \
 --timeout=480s \
---set-env-vars='DATA_LAKE_BUCKET=earthquakeclouddata','DATA_LAKE_DATASET=data_lake' \
+--set-env-vars='DATA_LAKE_BUCKET=earthquakeclouddata','DATA_LAKE_DATASET=data_lake','DATA_LAKE_CORE=core' \
 --trigger-http \
 --no-allow-unauthenticated  
 ```
