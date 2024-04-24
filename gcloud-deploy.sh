@@ -13,8 +13,8 @@ gcloud functions deploy manipulate_properties `
 --entry-point=manipulate_properties `
 --service-account=data-pipeline-robot-2024@earthquakers.iam.gserviceaccount.com `
 --set-env-vars='DATA_LAKE_BUCKET=earthquakeclouddata' `
---memory=12Gi `
---timeout=1500s `
+--memory=4Gi `
+--timeout=240s `
 --no-allow-unauthenticated `
 --trigger-http
 

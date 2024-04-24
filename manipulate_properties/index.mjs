@@ -36,14 +36,18 @@ functions.http('manipulate_properties', async (req, res) => {
   
 
   const f = await fs.open(preparedFilename, 'w');
-  for (const feature of data.features) {
-    feature.properties.lat = feature.geometry.coordinates[1];
-    feature.properties.lon = feature.geometry.coordinates[0];
-    feature.properties.alt = feature.geometry.coordinates[2];
-    feature.properties.id = feature.geometry.id;
+  try {
+    for (const feature of data.features) {
+      feature.properties.lat = feature.geometry.coordinates[1];
+      feature.properties.lon = feature.geometry.coordinates[0];
+      feature.properties.alt = feature.geometry.coordinates[2];
+      feature.properties.id = feature.geometry.id;
 
+    }
+    await f.write(JSON.stringify(data));
+  } finally {
+    await f.close();
   }
-  await f.write(JSON.stringify(data));
 
   console.log(`Processed data into ${preparedFilename}`);
 
