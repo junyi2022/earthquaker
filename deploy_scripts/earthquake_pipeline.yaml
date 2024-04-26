@@ -61,6 +61,12 @@ main:
                 url: https://us-east1-earthquakers.cloudfunctions.net/join_earthquake_continent
                 auth:
                     type: OIDC
+        - Top50:
+            call: http.post
+            args:
+                url: https://us-east1-earthquakers.cloudfunctions.net/load_top_earthquakes
+                auth:
+                    type: OIDC
         
                  
 
