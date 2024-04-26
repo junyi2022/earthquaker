@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Earthquakers</title>
+    <!-- add leaflet map css component -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    
+    <link rel="stylesheet" href="ui/css/general.css">
+</head>
+
+<body>
+    <!-- <header>
+        <h1>Earthquakers</h1>
+        <h2>Explore Past Earthquakes</h2>
+    </header> -->
+
+    <main>
+        <div id="map"></div>
+        <div id="control-panel">
+            <div>
+              <label>Radius</label>
+              <input id="radius" type="range" min="1000" max="60000" step="1000" value="60000"></input>
+              <span id="radius-value"></span>
+            </div>
+            <div>
+              <label>Coverage</label>
+              <input id="coverage" type="range" min="0" max="1" step="0.1" value="1"></input>
+              <span id="coverage-value"></span>
+            </div>
+            <div>
+              <label>Upper Percentile</label>
+              <input id="upperPercentile" type="range" min="90" max="100" step="1" value="100"></input>
+              <span id="upperPercentile-value"></span>
+            </div>
+          </div>
+    </main>
+
+
+    <!-- add leaflet library -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+    <!-- add deck gl -->
+    <script src="https://unpkg.com/deck.gl@latest/dist.min.js"></script>
+
+    <!-- optional if maplibre base map is needed -->
+<script src="https://unpkg.com/maplibre-gl@3.0.0/dist/maplibre-gl.js"></script>
+<link href="https://unpkg.com/maplibre-gl@3.0.0/dist/maplibre-gl.css" rel="stylesheet" />
+
+    <!-- link js file -->
+    <script type="module" src="ui/js/main.js"></script>
+</body>
+</html>
