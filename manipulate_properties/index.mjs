@@ -55,4 +55,5 @@ functions.http('manipulate_properties', async (req, res) => {
   const preparedBlobName = 'raw/past_month_eq/past_month_earthquakes_withlatlon.geojson';
   await bucket.upload(preparedFilename, { destination: preparedBlobName });
   console.log(`Uploaded to ${preparedBlobName}`);
+  res.send('Done');
 });
