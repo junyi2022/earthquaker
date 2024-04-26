@@ -1,37 +1,44 @@
-import pathlib
-import requests
-from google.cloud import storage
 import os
+import pathlib
 import functions_framework
-
 from dotenv import load_dotenv
-load_dotenv()
+from google.cloud import bigquery
 
+
+load_dotenv(".env")
 DATA_DIR = pathlib.Path(__file__).parent
+
+bucket_name = os.getenv('DATA_LAKE_BUCKET')
+dataset_name = os.getenv('DATA_LAKE_DATASET')
+core_dataset_name = os.getenv('DATA_LAKE_CORE')
+prepared_blobname = ('prepared/past_month_eq/*.jsonl')
+table_name = 'history_earthquakes'
+table_uri = f'gs://{bucket_name}/{prepared_blobname}'
+
+create_table_query = f'''
+CREATE OR REPLACE EXTERNAL TABLE {dataset_name}.{table_name}
+OPTIONS (
+  format = 'JSON',
+  uris = ['{table_uri}']
+)
+'''
+
+create_core_table_query = f'''
+CREATE OR REPLACE TABLE {core_dataset_name}.{table_name}
+CLUSTER BY (geog)
+AS (
+  SELECT *
+  FROM {dataset_name}.{table_name}
+)
+'''
 
 
 @functions_framework.http
-def extract_earthquake_data(request):
-    print('Downloading earthquake data...')
-    url = ('https://earthquake.usgs.gov/earthquakes/feed/v1.0/'
-           'summary/all_month.geojson')
-    filename = DATA_DIR / 'past_month_earthquakes.geojson'
+def load_earthquake_data(request):
+    print("Loading Earthquake data...")
 
-    response = requests.get(url)
-    response.raise_for_status()
+    bigquery_client = bigquery.Client()
+    bigquery_client.query_and_wait(create_table_query)
+    bigquery_client.query_and_wait(create_core_table_query)
 
-    with open(filename, 'wb') as f:
-        f.write(response.content)
-
-    print(f'Downloaded {filename}')
-
-    # Upload the downloaded file to cloud storage
-    bucket_name = os.getenv('DATA_LAKE_BUCKET')
-    blob_name = 'raw/past_month_eq/past_month_earthquakes.geojson'
-    storage_client = storage.Client()
-    bucket = storage_client.bucket(bucket_name)
-    blob = bucket.blob(blob_name)
-    blob.upload_from_filename(filename)
-
-    print(f'uploaded {blob_name} to {bucket_name}')
     return 'Success'
