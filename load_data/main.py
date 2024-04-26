@@ -11,9 +11,8 @@ DATA_DIR = pathlib.Path(__file__).parent
 bucket_name = os.getenv('DATA_LAKE_BUCKET')
 dataset_name = os.getenv('DATA_LAKE_DATASET')
 core_dataset_name = os.getenv('DATA_LAKE_CORE')
-prepared_blobname = ('prepared/past_month_eq/past_month_earthquakes'
-                     '_withlatlon.jsonl')
-table_name = 'past_month_earthquakes'
+prepared_blobname = ('prepared/past_month_eq/*.jsonl')
+table_name = 'history_earthquakes'
 table_uri = f'gs://{bucket_name}/{prepared_blobname}'
 
 create_table_query = f'''
