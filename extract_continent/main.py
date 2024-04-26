@@ -2,7 +2,6 @@ import pathlib
 import requests
 from google.cloud import storage
 import os
-import datetime as dt
 import functions_framework
 
 from dotenv import load_dotenv
@@ -10,7 +9,6 @@ load_dotenv()
 
 DATA_DIR = pathlib.Path(__file__).parent
 
-today_date = dt.date.today().isoformat()
 
 @functions_framework.http
 def extract_continent_data(request):
@@ -30,7 +28,7 @@ def extract_continent_data(request):
 
     # Upload the downloaded file to cloud storage
     bucket_name = os.getenv('DATA_LAKE_BUCKET')
-    blob_name = f'raw/world_continent/world_continent${today_date}.geojson'
+    blob_name = 'raw/world_continent/world_continent.geojson'
     storage_client = storage.Client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(blob_name)
