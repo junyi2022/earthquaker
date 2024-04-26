@@ -29,7 +29,7 @@ def join_earthquake_continent(request):
     eq_query = """
         SELECT
             *
-        FROM `earthquakers.core.past_month_earthquakes`
+        FROM `earthquakers.core.history_earthquakes`
     """
     ct_query = """
         SELECT
