@@ -1,5 +1,5 @@
 import os
-import json
+import csv
 import pathlib
 import functions_framework
 from dotenv import load_dotenv
@@ -14,7 +14,7 @@ DATA_DIR = pathlib.Path(__file__).parent
 public_bucket_name = os.getenv('PUBLIC_BUCKET')
 
 derived_dataset_name = os.getenv('DATA_LAKE_DERIVED')
-table_name = 'earthquake_by_continent'
+table_name = 'top_200'
 
 query = f'''
 SELECT * FROM {derived_dataset_name}.{table_name}
@@ -22,20 +22,20 @@ SELECT * FROM {derived_dataset_name}.{table_name}
 
 
 @functions_framework.http
-def export_all_earthquake_data(request):
+def export_200_earthquake_data(request):
     print("Loading Earthquake data...")
 
-    prepared_filename = DATA_DIR / 'all_earthquakes.json'
-    prepared_location = 'all_earthquakes/all_earthquakes.json'
+    prepared_filename = DATA_DIR / 'top_200_earthquakes.csv'
+    prepared_location = 'top_200/top_200_earthquakes.csv'
 
     bigquery_client = bigquery.Client()
     result = bigquery_client.query_and_wait(query)
-
-    with open(prepared_filename, 'w') as jsonfile:
-      json.dump([
-          dict(row.items()) 
-          for row in result
-        ], jsonfile)
+      
+    with open(prepared_filename, 'w', encoding='utf-8', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=[field.name for field in result.schema])
+        writer.writeheader()
+        for row in result:
+            writer.writerow(row)
       
     print(f'Processed data into {prepared_filename}')
 

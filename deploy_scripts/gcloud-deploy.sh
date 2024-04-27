@@ -1,7 +1,7 @@
 # local run local
 # python
 functions-framework --debug `
-  --target export_all_earthquake_data
+  --target export_200_earthquake_data
 # javascript
 npx @google-cloud/functions-framework `
   --target manipulate_properties
@@ -53,6 +53,7 @@ gcloud functions deploy load_earthquake_data `
 --no-allow-unauthenticated
 
 # export from bigquery to cloud storage
+# all earthquake data
 gcloud functions deploy export_all_earthquake_data `
 --gen2 `
 --region=us-east1 `
@@ -67,13 +68,27 @@ gcloud functions deploy export_all_earthquake_data `
 --trigger-http `
 --no-allow-unauthenticated
 
+# top 200 earthquake data
+gcloud functions deploy export_200_earthquake_data `
+--gen2 `
+--region=us-east1 `
+--runtime=python312 `
+--project=earthquakers `
+--source=. `
+--entry-point=export_200_earthquake_data `
+--service-account=data-pipeline-robot-2024@earthquakers.iam.gserviceaccount.com	 `
+--memory=2Gi `
+--timeout=240s `
+--set-env-vars='PUBLIC_BUCKET=earthquaker_public,DATA_LAKE_DERIVED=derived' `
+--trigger-http `
+--no-allow-unauthenticated
 
 # local run cloud
 gcloud functions call prepare_eq_data --project=earthquakers --region=us-east1
 
 gcloud functions call manipulate_properties --project=earthquakers --region=us-east1
 
-gcloud functions call export_all_earthquake_data --project=earthquakers --region=us-east1
+gcloud functions call export_200_earthquake_data --project=earthquakers --region=us-east1
 
 gcloud functions logs read prepare_eq_data --project=earthquakers --region=us-east1
 
