@@ -50,7 +50,8 @@ def join_earthquake_continent(request):
     joined = joined[['mag', 'place', 'time', 'updated', 'tz', 'felt', 'cdi',
                      'mmi', 'alert', 'status', 'tsunami', 'sig', 'net',
                      'sources', 'types', 'nst', 'dmin', 'rms', 'gap',
-                     'magType', 'type', 'title', 'geometry', 'CONTINENT']]
+                     'magType', 'type', 'title', 'geometry', 'CONTINENT',
+                     'lon', 'lat', 'alt']]
     joined['geometry'] = joined['geometry'].astype(str)
     pandas_gbq.to_gbq(joined, 'derived.earthquake_by_continent',
                       project_id="earthquakers", if_exists='replace')
