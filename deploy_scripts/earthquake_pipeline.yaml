@@ -67,7 +67,25 @@ main:
                 url: https://us-east1-earthquakers.cloudfunctions.net/load_top_earthquakes
                 auth:
                     type: OIDC
-        
+         - parallelStep2:
+            parallel:
+                branches:
+                    - export1:
+                        steps:
+                            - ExportJoinedData:
+                                call: http.post
+                                args:
+                                    url: https://us-east1-earthquakers.cloudfunctions.net/export_all_earthquake_data
+                                    auth:
+                                        type: OIDC
+                    - export2:
+                        steps:
+                            - ExportTopData:
+                                call: http.post
+                                args:
+                                    url: https://us-east1-earthquakers.cloudfunctions.net/export_200_earthquake_data
+                                    auth:
+                                        type: OIDC       
                  
 
                     
