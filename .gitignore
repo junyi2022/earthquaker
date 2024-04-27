@@ -13,6 +13,7 @@ manipulate_properties/past_month_earthquakes.geojson
 manipulate_properties/past_month_earthquakes_withlatlon.geojson
 
 export_to_json/all_earthquakes.json
+export_top_to_csv/top_200_earthquakes.csv
 
 # Connection credentials
 keys/
