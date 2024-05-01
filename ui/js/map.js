@@ -5,8 +5,8 @@ function initializeMap() {
   const deckgl = new DeckGL({
     mapStyle: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
     initialViewState: {
-      longitude: -8,
-      latitude: 30,
+      longitude: 6,
+      latitude: 25,
       zoom: 1,
       minZoom: 1,
       maxZoom: 25,
@@ -18,15 +18,15 @@ function initializeMap() {
 
   const data = d3.json('https://storage.googleapis.com/earthquaker_public/all_earthquakes/all_earthquakes.json');
   
-  const OPTIONS = ['radius', 'coverage', 'upperPercentile'];
-  
+  const OPTIONS = ['radius', 'coverage', 'elevationScale'];
+
   const COLOR_RANGE = [
-    [1, 152, 189],
-    [73, 227, 206],
-    [216, 254, 181],
-    [254, 237, 177],
-    [254, 173, 84],
-    [209, 55, 78]
+    [92, 92, 245],
+    [106, 207, 244],
+    [168, 240, 196],
+    [255, 231, 81],
+    [255, 144, 39],
+    [244, 73, 66]
   ];
   
   OPTIONS.forEach(key => {
@@ -34,6 +34,17 @@ function initializeMap() {
   });
   
   renderLayer();
+
+  function handleTooltip(object) {
+    const sumPoints = {'continent': [], 'mag': [], 'place': [], 'sig': []};
+    const points = object.points; //array
+    points.forEach(p => {
+      const continent = p.source.CONTINENT;
+      const mag = p.source.mag;
+      const place = p.source.place;
+      const sig = p.source.sig;
+    });
+  }
 
   function renderLayer () {
     const options = {};
@@ -47,14 +58,18 @@ function initializeMap() {
       id: 'HexagonLayer',
       colorRange: COLOR_RANGE,
       data,
-      elevationRange: [10, 10000],
-      elevationScale: 50,
+      elevationRange: [100, 10000],
       extruded: true,
+      pickable: true,
       colorScaleType: 'quantile',
       getColorWeight: (d) => {
         return d.mag
       },
       colorAggregation: 'MAX',
+      getElevationWeight: (d) => {
+        return d.sig
+      },
+      elevationAggregation: 'MAX',
       // getElevationValue: d => d.length,
       getPosition: d => [d.lon, d.lat],
       opacity: 1,
@@ -63,10 +78,11 @@ function initializeMap() {
   
     deckgl.setProps({
       layers: [hexagonLayer],
-      // getTooltip: (object) => { 
-      //   console.log(object);
-      //   return `Count: ${object.coordinate}`
-      // },
+      getTooltip: ({ object }) => {
+        if (!object) return null; // No tooltip if no object
+        console.log(object);
+        return `Bin Value: ${object.value}`;
+      },
     });
   }
 }

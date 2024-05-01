@@ -28,7 +28,7 @@
             <div class="options">
                 <label>Radius</label>
                 <label class="slider">
-                    <input class="widget" id="radius" type="range" min="3000" max="120000" step="1000" value="60000"></input>
+                    <input class="widget" id="radius" type="range" min="3000" max="120000" step="1000" value="30000"></input>
                 </label>
                 
                 <span id="radius-value"></span>
@@ -42,15 +42,21 @@
                 <span id="coverage-value"></span>
             </div>
             <div class="options">
-                <label>Upper Percentile</label>
+                <label>Elevation Scale</label>
                 <label class="slider">
-                    <input class="widget" id="upperPercentile" type="range" min="90" max="100" step="1" value="100"></input>
+                    <input class="widget" id="elevationScale" type="range" min="50" max="200" step="1" value="100"></input>
                 </label>
                 
-                <span id="upperPercentile-value"></span>
+                <span id="elevationScale-value"></span>
             </div>
         </div>
-        <div class="EQbyContinent chart"></div>
+        <div class="chart-series">
+            <div class="EQbyContinent chart"></div>
+            <div class="EQbyMag chart"></div>
+            <div class="topEQ chart"></div>
+            <p>Text</p>
+        </div>
+        
     </main>
 
 
