@@ -2,10 +2,10 @@ const theta = Math.PI * (3 - Math.sqrt(5))
 const radius = 6
 const step = radius * 2
 const height = 500
-const width = 1152
+const width = 500
 
 
-async function draw() {
+async function drawtopEQ(palette) {
   const raw_data = await d3.text("https://storage.googleapis.com/earthquaker_public/top_200/top_200_earthquakes.csv");
   const processed_data = d3.csvParse(raw_data, ({mag, place, CONTINENT}) => ({mag: +mag, place: place, CONTINENT: CONTINENT}))
     .sort((a, b) => b.mag - a.mag)
@@ -27,20 +27,21 @@ async function draw() {
       }
     });
 
-  const viz = zoomDiagram(circlegrp, joinedData);
+  const viz = zoomDiagram(circlegrp, joinedData, palette);
   return viz;
 
   
 }
 
-function zoomDiagram(dataa, joinedData){
+function zoomDiagram(dataa, joinedData, palette){
     let currentTransform = [width / 2, height / 2, height];
   
     const svg = d3.create("svg")
         .attr("viewBox", [0, 0, width, height])
   
     const g = svg.append("g");
-    const colorScale = d3.scaleOrdinal(d3.schemeSet3)
+    const colorScale = d3.scaleOrdinal()
+    .range(palette)
 
     g.selectAll("circle")
       .data(joinedData)
@@ -53,6 +54,7 @@ function zoomDiagram(dataa, joinedData){
     g.selectAll("text.place")
       .data(joinedData)
       .join("text")
+      .attr("class", "title")
         .attr("x", ([x]) => x)
         .attr("y", ([, y]) => y)
         .attr("text-anchor", "middle")
@@ -70,6 +72,7 @@ function zoomDiagram(dataa, joinedData){
    g.selectAll("text.mag")
       .data(joinedData)
       .join("text")
+      .attr("class", "title")
         .attr("x", ([x]) => x)
         .attr("y", ([, y]) => y + 2)
         .attr("text-anchor", "middle")
@@ -88,6 +91,7 @@ function zoomDiagram(dataa, joinedData){
  g.selectAll("text.continent")
     .data(joinedData)
     .join("text")
+      .attr("class", "title")
       .attr("x", ([x]) => x)
       .attr("y", ([, y]) => y - 2)
       .attr("text-anchor", "middle")
@@ -123,10 +127,10 @@ function zoomDiagram(dataa, joinedData){
     }
   
    const viz = svg.call(transition).node();
-   document.body.append(viz) // note to self: append this to a div later
+   document.querySelector('.topEQ').append(viz) // note to self: append this to a div later
   }
 
-  draw()
-
-
+export {
+  drawtopEQ,
+};
 

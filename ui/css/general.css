@@ -1,11 +1,10 @@
-h1, h2 {
+h1, h2, p {
   margin: 0;
   color: white;
   display: inline;
 }
 
 body {
-    width: 100vw;
     height: 100vh;
     margin: 0;
     background-color: rgb(27, 27, 27);
@@ -18,11 +17,15 @@ header {
   box-sizing: border-box;
 }
 
+main {
+  height: calc(100vh - 5rem);
+}
+
 #map {
     width: 100vw;
     height: 60vh;
     margin: 0;
-
+    background: #2C353C;
 }
   
 #control-panel {
@@ -87,6 +90,18 @@ span {
   color: white;
 }
 
+.chart-series {
+  display: flex;
+  flex-direction: row;
+}
+
 .chart {
-  height: 30vh;
+  height: calc(100vh - 60vh - 5rem);
+  width: calc(100vh - 60vh - 5rem);
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.chart .title {
+  fill: white;
 }

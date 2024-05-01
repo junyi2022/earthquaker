@@ -1,8 +1,8 @@
 
-const width = 1152
+const width = 500
 
 
-async function draw() {
+async function drawEQbyContinent(palette) {
   const raw_data = await d3.text("https://storage.googleapis.com/earthquaker_public/top_200/top_200_earthquakes.csv");
   const processed_data = d3.csvParse(raw_data, ({mag, place, CONTINENT}) => ({mag: +mag, place: place, CONTINENT: CONTINENT})).
   reduce((counts, item) => {
@@ -17,13 +17,13 @@ async function draw() {
       count: count
     }));
 
-  const viz = continent_donut(donut_array);
+  const viz = continent_donut(donut_array, palette);
   return viz;
 
   
 }
 
-function continent_donut(donut_array){
+function continent_donut(donut_array, palette){
     const height = Math.min(width, 500);
     const radius = Math.min(width, height) / 2;
 
@@ -36,7 +36,8 @@ function continent_donut(donut_array){
     .sort(null)
     .value(d => d.count);
 
-    const color= d3.scaleOrdinal(d3.schemeSet2)
+    const color= d3.scaleOrdinal()
+    .range(palette)
 
     const svg = d3.create("svg")
     .attr("width", width)
@@ -97,11 +98,13 @@ function continent_donut(donut_array){
 
     const title = svg.append("text")
     .style("font", "bold 17px sans-serif")
+    .attr("class", "title")
     .attr("transform", "translate(-145, 5)")
     .text("Earthquake Occurence By Continent")
     
     const subtitle = svg.append("text")
     .style("font", "14px sans-serif")
+    .attr("class", "title")
     .attr("transform", "translate(-130, 35)")
     .text("For Top 200 Earthquakes Since Apr 2024")
 
@@ -111,5 +114,5 @@ function continent_donut(donut_array){
 }
 
 export {
-  draw
+  drawEQbyContinent,
 };
