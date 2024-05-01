@@ -3,25 +3,26 @@ const width = 1152
 
 
 async function draw() {
-    const raw_data = await d3.text("https://storage.googleapis.com/earthquaker_public/top_200/top_200_earthquakes.csv");
-    const processed_data = d3.csvParse(raw_data, ({mag, place, CONTINENT}) => ({mag: +mag, place: place, CONTINENT: CONTINENT})).
-    reduce((counts, item) => {
-        let ct = item.CONTINENT;
-    
-        counts[ct] = (counts[ct] || 0) + 1;
-        return counts;
-    }, {});
+  const raw_data = await d3.text("https://storage.googleapis.com/earthquaker_public/top_200/top_200_earthquakes.csv");
+  const processed_data = d3.csvParse(raw_data, ({mag, place, CONTINENT}) => ({mag: +mag, place: place, CONTINENT: CONTINENT})).
+  console.log(processed_data);
+  reduce((counts, item) => {
+      let ct = item.CONTINENT;
   
-    donut_array = Object.entries(processed_data).map(([continent, count]) => ({
-        value: continent,
-        count: count
-      }));
+      counts[ct] = (counts[ct] || 0) + 1;
+      return counts;
+  }, {});
+
+  donut_array = Object.entries(processed_data).map(([continent, count]) => ({
+      value: continent,
+      count: count
+    }));
+
+  const viz = continent_donut(donut_array);
+  return viz;
+
   
-   const viz = continent_donut(donut_array);
-   return viz;
-  
-    
-  }
+}
 
 function continent_donut(donut_array){
     const height = Math.min(width, 500);
@@ -106,12 +107,10 @@ function continent_donut(donut_array){
     .text("For Top 200 Earthquakes Since Apr 2024")
 
     const viz = svg.node();
-    document.body.append(viz) // note to self: append this to a div later
+    document.querySelector('.EQbyContinent').append(viz);
 
 }
 
-
-
-
-
-  draw()
+export {
+  draw,
+};
