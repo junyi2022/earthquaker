@@ -6,6 +6,19 @@
 # unless you input your own search term; for example, {"searchTerm": "asia"}.
 main:
     steps:
+        - first_step:
+            call: http.get
+            args:
+                url: https://us-east1-earthquakers.cloudfunctions.net/invoke_trigger
+                auth:
+                    type: OIDC
+            result: trigger_event
+        - where_to_jump:
+            switch:
+                - condition: ${trigger_event.body == "0"}
+                  next: end
+                - condition: ${trigger_event.body == "1"}
+                  next: parallelStep
         - parallelStep:
             parallel:
                 branches:
