@@ -5,7 +5,6 @@ const width = 1152
 async function draw() {
   const raw_data = await d3.text("https://storage.googleapis.com/earthquaker_public/top_200/top_200_earthquakes.csv");
   const processed_data = d3.csvParse(raw_data, ({mag, place, CONTINENT}) => ({mag: +mag, place: place, CONTINENT: CONTINENT})).
-  console.log(processed_data);
   reduce((counts, item) => {
       let ct = item.CONTINENT;
   
@@ -13,7 +12,7 @@ async function draw() {
       return counts;
   }, {});
 
-  donut_array = Object.entries(processed_data).map(([continent, count]) => ({
+  const donut_array = Object.entries(processed_data).map(([continent, count]) => ({
       value: continent,
       count: count
     }));
@@ -112,5 +111,5 @@ function continent_donut(donut_array){
 }
 
 export {
-  draw,
+  draw
 };
