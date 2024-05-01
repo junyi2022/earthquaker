@@ -5,14 +5,15 @@ function initializeMap() {
   const deckgl = new DeckGL({
     mapStyle: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
     initialViewState: {
-      longitude: 5,
+      longitude: -8,
       latitude: 30,
       zoom: 1,
       minZoom: 1,
       maxZoom: 25,
-      //pitch: 40.5
+      pitch: 60.5,
     },
-    controller: true
+    controller: true,
+    container: 'map', // id of html
   });
 
   const data = d3.json('https://storage.googleapis.com/earthquaker_public/all_earthquakes/all_earthquakes.json');
@@ -37,17 +38,17 @@ function initializeMap() {
   function renderLayer () {
     const options = {};
     OPTIONS.forEach(key => {
-      const value = +document.getElementById(key).value;
+      const value = +document.getElementById(key).value; // + convert to number
       document.getElementById(key + '-value').innerHTML = value;
-      options[key] = value;
+      options[key] = value; // options is like {radius: 100, coverage: 1, upperPercentile: 100}
     });
-  
+    
     const hexagonLayer = new HexagonLayer({
       id: 'HexagonLayer',
       colorRange: COLOR_RANGE,
-      data: data,
-      elevationRange: [0, 1000],
-      elevationScale: 250,
+      data,
+      elevationRange: [10, 10000],
+      elevationScale: 50,
       extruded: true,
       colorScaleType: 'quantile',
       getColorWeight: (d) => {
@@ -61,7 +62,11 @@ function initializeMap() {
     });
   
     deckgl.setProps({
-      layers: [hexagonLayer]
+      layers: [hexagonLayer],
+      // getTooltip: (object) => { 
+      //   console.log(object);
+      //   return `Count: ${object.coordinate}`
+      // },
     });
   }
 }
