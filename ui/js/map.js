@@ -67,7 +67,7 @@ function initializeMap() {
       data,
       elevationRange: [100, 10000],
       extruded: true,
-      pickable: true,
+      pickable: true, // enable tooltip
       colorScaleType: 'quantile',
       getColorWeight: (d) => {
         return d.mag
@@ -83,11 +83,21 @@ function initializeMap() {
       ...options
     });
   
+    hexagonLayer.onHover = ({ layer }) => {
+      if (layer) {
+        console.log(layer.props.colorRange);
+        // If an object is hovered over, update its color
+        // layer.props.colorRange = [255, 0, 0];
+        // Trigger redraw
+        deckgl.setProps({ layers: [hexagonLayer] });
+      }
+    };
+
     deckgl.setProps({
       layers: [hexagonLayer],
       getTooltip: ({ object }) => {
         if (!object) return null; // No tooltip if no object
-        console.log(object);
+        // console.log(object);
         const tooltipData = handleTooltip(object)
         return {
           html: `
@@ -107,6 +117,7 @@ function initializeMap() {
         };
       },
     });
+
   }
 }
 
