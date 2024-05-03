@@ -67,7 +67,7 @@ function zoomDiagram(dataa, joinedData, palette){
           }
         })   
         .attr("fill", "black")
-        .attr("font-size", "0.5px");
+        .attr("font-size", "0.7px");
   
    g.selectAll("text.mag")
       .data(joinedData)
@@ -98,7 +98,7 @@ function zoomDiagram(dataa, joinedData, palette){
       .attr("dominant-baseline", "middle")
       .text(([,, earthquake]) => {
         if (earthquake) {
-          return `Location: ${earthquake.CONTINENT}`; 
+          return `${earthquake.CONTINENT}`; 
         } else {
           return ""; 
         }

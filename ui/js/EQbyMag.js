@@ -49,7 +49,7 @@ function magnitude_donut(mag_array_fil, palette){
     const svg = d3.create("svg")
     .attr("width", width)
     .attr("height", height)
-    .attr("viewBox", [-width / 2, -height / 2, width, height+50])
+    .attr("viewBox", [-width / 2, -height / 2, width, height])
     .attr("style", "max-width: 100%; height: auto;");
 
     svg.append("g")
@@ -60,6 +60,30 @@ function magnitude_donut(mag_array_fil, palette){
     .attr("d", arc)
     .append("title")
     .text(d => `${d.data.value}: ${d.data.count.toLocaleString()}`);
+
+    const title = svg.append("text")
+    .style("font", "bold 17px sans-serif")
+    .attr("class", "title")
+    .attr("transform", "translate(-92, -15)")
+    .text("Earthquake Occurence")
+
+    const title2 = svg.append("text")
+    .style("font", "bold 17px sans-serif")
+    .attr("class", "title")
+    .attr("transform", "translate(-55, 8)")
+    .text("By Magnitude")
+ 
+    const subtitle = svg.append("text")
+    .style("font", "14px sans-serif")
+    .attr("class", "title")
+    .attr("transform", "translate(-82, 35)")
+    .text("For Top 200 Earthquakes")
+
+    const subtitle2 = svg.append("text")
+    .style("font", "14px sans-serif")
+    .attr("class", "title")
+    .attr("transform", "translate(-50, 55)")
+    .text("Since Apr 2024")
 
     const tip = svg.append("g")
     .style("visibility", "hidden");
@@ -89,7 +113,7 @@ function magnitude_donut(mag_array_fil, palette){
       my += 20;
       mx = Math.max(0, Math.min(width - 150, mx))
         d3.select(evt.target)
-          .attr("fill", "rgba(255, 0, 0, 0.5)")
+          .attr("fill", "rgb(255, 171, 171)")
           tip.attr("transform", `translate(${mx}, ${my})`)
           .style("visibility","visible")
       
@@ -102,18 +126,6 @@ function magnitude_donut(mag_array_fil, palette){
 
         tip.style("visibility","hidden")
     })
-
-    const title = svg.append("text")
-    .style("font", "bold 17px sans-serif")
-    .attr("class", "title")
-    .attr("transform", "translate(-145, 5)")
-    .text("Earthquake Occurence By Magnitude")
- 
-    const subtitle = svg.append("text")
-    .style("font", "14px sans-serif")
-    .attr("class", "title")
-    .attr("transform", "translate(-130, 35)")
-    .text("For Top 200 Earthquakes Since Apr 2024")
 
     const viz = svg.node();
     document.querySelector('.EQbyMag').append(viz) // note to self: append this to a div later
