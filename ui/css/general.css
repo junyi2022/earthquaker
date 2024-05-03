@@ -1,7 +1,35 @@
-h1, h2, p {
-  margin: 0;
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap|Roboto');
+
+h1{
+  font-family: 'Bebas Neue', cursive;
+  margin: 1;
   color: white;
   display: inline;
+  font-size: 38px;
+  letter-spacing: 1.8px;
+}
+
+
+header span {
+  font-family: 'Bebas Neue';
+  color:#F44942;
+  letter-spacing: 2px;
+  font-size: 25px;
+  font-weight: 500;
+  top: 60%;
+  left: 60%;
+  transform: translate(-50%,-50%);
+  background-image: linear-gradient(gold, gold);
+  background-size: 100% 10px;
+  background-repeat: no-repeat;
+  background-position: 100% 10%;
+  transition: background-size .7s, background-position .5s ease-in-out;
+}
+
+header span:hover {
+  background-size: 100% 100%;
+  background-position: 0% 100%;
+  transition: background-position .7s, background-size .5s ease-in-out;
 }
 
 body {
@@ -93,15 +121,25 @@ span {
 .chart-series {
   display: flex;
   flex-direction: row;
+  font-family: 'Roboto', sans-serif;
 }
 
 .chart {
-  height: calc(100vh - 60vh - 5rem);
-  width: calc(100vh - 60vh - 5rem);
+  height: calc(100vh - 50vh - 5rem);
+  width: calc(100vh - 50vh - 5rem);
   padding: 1rem;
   box-sizing: border-box;
 }
 
 .chart .title {
   fill: white;
+}
+
+.description {
+  width: 60%;
+  font-size: 14.5px;
+  line-height: 1.4; 
+  padding: 8px;
+  color: white;
+  font-family: 'Roboto', sans-serif;
 }

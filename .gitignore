@@ -34,3 +34,4 @@ prepared_data/*
 keys/
 .env
 .DS_Store
+.vscode
