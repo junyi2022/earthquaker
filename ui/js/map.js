@@ -118,12 +118,12 @@ function initializeMap() {
           }
         };
       },
-      onHover: ({object}) => {
-        if (object) {
-          console.log(object);
-          object.colorValue = 0;
-        }
-      },
+      // onHover: ({object}) => {
+      //   if (object) {
+      //     console.log(object);
+      //     object.colorValue = 0;
+      //   }
+      // },
     });
 
   }
