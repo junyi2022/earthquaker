@@ -9,6 +9,10 @@ h1{
   letter-spacing: 1.8px;
 }
 
+img {
+  align-self: flex-end; 
+  margin-bottom: -18px; 
+}
 
 header span {
   font-family: 'Bebas Neue';
@@ -19,7 +23,7 @@ header span {
   top: 60%;
   left: 60%;
   transform: translate(-50%,-50%);
-  background-image: linear-gradient(gold, gold);
+  background-image: linear-gradient(#ffd700, gold);
   background-size: 100% 10px;
   background-repeat: no-repeat;
   background-position: 100% 10%;
