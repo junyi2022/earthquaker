@@ -43,7 +43,14 @@ function initializeMap() {
       const mag = p.source.mag;
       const place = p.source.place;
       const sig = p.source.sig;
+      sumPoints['continent'].push(continent);
+      sumPoints['mag'].push(mag);
+      sumPoints['place'].push(place);
+      sumPoints['sig'].push(sig);
     });
+    console.log(sumPoints);
+    const tooltipData = {'continent': sumPoints['continent'][0], 'mag': Math.max(...sumPoints['mag']), 'place': sumPoints['place'][0], 'sig': Math.max(...sumPoints['sig'])}
+    return tooltipData;
   }
 
   function renderLayer () {
@@ -81,7 +88,23 @@ function initializeMap() {
       getTooltip: ({ object }) => {
         if (!object) return null; // No tooltip if no object
         console.log(object);
-        return `Bin Value: ${object.value}`;
+        const tooltipData = handleTooltip(object)
+        return {
+          html: `
+            <p><strong>Continent:</strong> ${tooltipData['continent']}</p>
+            <p><strong>Place:</strong> Around ${tooltipData['place']}</p>
+            <p><strong>Max Magnitude:</strong> ${tooltipData['mag']}</p>
+            <p><strong>Max Significance:</strong> ${tooltipData['sig']}</p>
+          `,
+          style: {
+            backgroundColor: '#6d738fc9',
+            display: 'flex',
+            flexDirection: 'column',
+            fontSize: '0.8em',
+            fontFamily: 'Helvetica, Arial, sans-serif',
+            borderRadius: '5px',
+          }
+        };
       },
     });
   }
