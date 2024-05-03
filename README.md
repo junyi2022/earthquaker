@@ -9,7 +9,7 @@ Project Title: An Interactive Dashboard - Monthly Updates on Global Seismic Acti
 ### Project Abstract
 Welcome to the Earthquake Dashboard, a project by the Earthquakers that displays historical seismic activity and provide comprehensive insights into earthquakes occurrences worldwide! 
 
-[!front](frontpage-pic.png)
+![front](frontpage-pic.png)
 
 Our project relies on two types of data. The Earthquake data is provided by the USGS and can be accessed via their API on their official [webpage](https://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php). The continent data is available at the ArcGIS Hub and can also be accssed via their public API [online](https://hub.arcgis.com/datasets/esri::world-continents/about). 
 
