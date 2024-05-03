@@ -7,6 +7,7 @@ p {
 h1{
   font-family: 'Bebas Neue', cursive;
   margin: 0;
+  margin-left: 10px;
   color: white;
   display: inline;
   font-size: 38px;
@@ -18,16 +19,14 @@ img {
   margin-bottom: -18px; 
 }
 
-/* header span {
+header span {
   font-family: 'Bebas Neue';
-  color:#F44942;
+  color:#5C5CF5;
   letter-spacing: 2px;
-  font-size: 25px;
+  font-size: 38px;
   font-weight: 500;
-  top: 60%;
-  left: 60%;
   transform: translate(-50%,-50%);
-  background-image: linear-gradient(#ffd700, gold);
+  background-image: linear-gradient(#A8F0C4, #FFE751);
   background-size: 100% 10px;
   background-repeat: no-repeat;
   background-position: 100% 10%;
@@ -38,10 +37,17 @@ header span:hover {
   background-size: 100% 100%;
   background-position: 0% 100%;
   transition: background-position .7s, background-size .5s ease-in-out;
-} */
+}
+
+html {
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+}
 
 body {
-    height: 100vh;
+    height: 100%;
+    width: 100%;
     margin: 0;
     background-color: rgb(27, 27, 27);
     font-family: Helvetica, Arial, sans-serif;
@@ -139,6 +145,8 @@ span {
   aspect-ratio: 1 / 1;
   padding: 1rem;
   box-sizing: border-box;
+  display: flex;
+  align-items: center;
 }
 
 .chart svg {

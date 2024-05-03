@@ -5,7 +5,7 @@ function initializeMap() {
   const deckgl = new DeckGL({
     mapStyle: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
     initialViewState: {
-      longitude: 6,
+      longitude: 4,
       latitude: 25,
       zoom: 1,
       minZoom: 1,
@@ -15,6 +15,7 @@ function initializeMap() {
     controller: true,
     container: 'map', // id of html
   });
+  window.deckgl = deckgl;
 
   const data = d3.json('https://storage.googleapis.com/earthquaker_public/all_earthquakes/all_earthquakes.json');
   
@@ -48,7 +49,7 @@ function initializeMap() {
       sumPoints['place'].push(place);
       sumPoints['sig'].push(sig);
     });
-    console.log(sumPoints);
+    // console.log(sumPoints);
     const tooltipData = {'continent': sumPoints['continent'][0], 'mag': Math.max(...sumPoints['mag']), 'place': sumPoints['place'][0], 'sig': Math.max(...sumPoints['sig'])}
     return tooltipData;
   }
@@ -82,14 +83,14 @@ function initializeMap() {
       opacity: 1,
       ...options
     });
+    window.hexagonLayer = hexagonLayer;
   
-    // hexagonLayer.onHover = ({ layer }) => {
-    //   if (layer) {
-    //     console.log(layer.props);
+    // hexagonLayer.onHover = ({ object }) => {
+    //   if (object) {
+    //     console.log(object);
     //     // If an layer is hovered over, update its color
-    //     layer.props.colorRange = [255, 0, 0];
-    //     // Trigger redraw
-    //     deckgl.setProps({ layers: [hexagonLayer] });
+    //     // layer.props.colorRange = [255, 0, 0];
+    //     object.colorValue = 0;
     //   }
     // };
 
@@ -111,10 +112,17 @@ function initializeMap() {
             display: 'flex',
             flexDirection: 'column',
             fontSize: '0.8em',
+            color: 'white',
             fontFamily: 'Helvetica, Arial, sans-serif',
             borderRadius: '5px',
           }
         };
+      },
+      onHover: ({object}) => {
+        if (object) {
+          console.log(object);
+          object.colorValue = 0;
+        }
       },
     });
 
