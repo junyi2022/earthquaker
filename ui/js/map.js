@@ -83,15 +83,15 @@ function initializeMap() {
       ...options
     });
   
-    hexagonLayer.onHover = ({ layer }) => {
-      if (layer) {
-        console.log(layer.props.colorRange);
-        // If an object is hovered over, update its color
-        // layer.props.colorRange = [255, 0, 0];
-        // Trigger redraw
-        deckgl.setProps({ layers: [hexagonLayer] });
-      }
-    };
+    // hexagonLayer.onHover = ({ layer }) => {
+    //   if (layer) {
+    //     console.log(layer.props);
+    //     // If an layer is hovered over, update its color
+    //     layer.props.colorRange = [255, 0, 0];
+    //     // Trigger redraw
+    //     deckgl.setProps({ layers: [hexagonLayer] });
+    //   }
+    // };
 
     deckgl.setProps({
       layers: [hexagonLayer],

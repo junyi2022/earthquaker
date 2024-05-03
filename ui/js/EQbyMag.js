@@ -1,5 +1,5 @@
 
-const width = 500
+const width = 300
 
 
 async function drawEQbyMag(palette) {
@@ -31,7 +31,7 @@ async function drawEQbyMag(palette) {
 
 function magnitude_donut(mag_array_fil, palette){
 
-    const height = Math.min(width, 500);
+    const height = Math.min(width, 300);
     const radius = Math.min(width, height) / 2;
 
     const arc = d3.arc()

@@ -1,8 +1,8 @@
 const theta = Math.PI * (3 - Math.sqrt(5))
 const radius = 6
 const step = radius * 2
-const height = 500
-const width = 500
+const height = 200
+const width = 200
 
 
 async function drawtopEQ(palette) {
