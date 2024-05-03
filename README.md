@@ -2,9 +2,11 @@
 
 
 ### Project Information
-Team: Earthquakers 
-Team Members: Junyi Yang, Emily Zhou, Jiahang Li
-Project Title: An Interactive Dashboard - Monthly Updates on Global Seismic Activity
+**Team**: Earthquakers 
+
+**Team Members**: Junyi Yang, Emily Zhou, Jiahang Li
+
+**Project Title**: An Interactive Dashboard - Monthly Updates on Global Seismic Activity
 
 ### Project Abstract
 Welcome to the Earthquake Dashboard, a project by the Earthquakers that displays historical seismic activity and provide comprehensive insights into earthquakes occurrences worldwide! 
