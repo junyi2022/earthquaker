@@ -161,6 +161,8 @@ span {
 .text {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  margin-left: 40px;
 }
 
 .description {
@@ -172,6 +174,7 @@ span {
   font-family: 'Roboto', sans-serif;
   overflow: auto;
   margin: 0;
+  max-width: 650px;
 }
 
 .reference {
@@ -180,7 +183,6 @@ span {
   padding: 0 1rem 0 1rem;
   color: lightgray;
   font-family: 'Roboto', sans-serif;
-  overflow: auto;
   margin: 0;
   font-style: italic;
 }
@@ -199,4 +201,25 @@ a:hover {
 
 a:active {
   color: rgb(92, 92, 245);
+}
+
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+  border: transparent;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: lightgray;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: gray;
+  cursor: pointer;
 }
