@@ -158,6 +158,11 @@ span {
   fill: white;
 }
 
+.text {
+  display: flex;
+  flex-direction: column;
+}
+
 .description {
   /* width: calc(100% - 3 * (100vh - 60vh - 5rem)); */
   font-size: 14.5px;
@@ -167,4 +172,31 @@ span {
   font-family: 'Roboto', sans-serif;
   overflow: auto;
   margin: 0;
+}
+
+.reference {
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 0 1rem 0 1rem;
+  color: lightgray;
+  font-family: 'Roboto', sans-serif;
+  overflow: auto;
+  margin: 0;
+  font-style: italic;
+}
+
+a {
+  color: lightgray;
+}
+
+a:visited {
+  color: lightgray;
+}
+
+a:hover {
+  color: rgb(92, 92, 245);
+}
+
+a:active {
+  color: rgb(92, 92, 245);
 }
