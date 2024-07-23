@@ -14,3 +14,4 @@ gcloud functions deploy load_top_earthquakes \
 --no-allow-unauthenticated  
 ```
 gcloud functions call load_top_earthquakes --project=earthquakers --region us-east1
+functions-framework --target load_top_earthquakes --debug
