@@ -20,7 +20,7 @@ async function drawEQbyMag(palette) {
 
     const mag_array = Object.entries(mag_summary).map(([mag, count]) => ({
         value: mag,
-        count: count
+        count: count / 200 * 100
       }));
 
     const mag_array_fil = mag_array.filter(item => item.value >= 0);
@@ -118,7 +118,7 @@ function magnitude_donut(mag_array_fil, palette){
           .style("visibility","visible")
       
           value.text(`Magnitude: ${d.data.value}`);
-          count.text(`Count: ${d.data.count}`);
+          count.text(`Pct: ${d.data.count} %`);
       })
       .on("mouseout",(evt, d)=>{
         d3.select(evt.target)

@@ -12,9 +12,9 @@ def load_top_earthquakes(request):
         CREATE OR REPLACE TABLE `earthquakers.derived.top_200` AS
         SELECT *
         FROM `earthquakers.derived.earthquake_by_continent`
+        WHERE CONTINENT != 'Sea'
         ORDER BY mag DESC
-        LIMIT 200
-    """
+        LIMIT 200"""
     earthquake = client.query_and_wait(eq_query).to_dataframe()
     pandas_gbq.to_gbq(earthquake, 'derived.top_200',
                       project_id="earthquakers", if_exists='replace')

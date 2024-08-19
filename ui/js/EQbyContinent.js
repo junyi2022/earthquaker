@@ -14,7 +14,7 @@ async function drawEQbyContinent(palette) {
 
   const donut_array = Object.entries(processed_data).map(([continent, count]) => ({
       value: continent,
-      count: count
+      count: count / 200 * 100
     }));
 
   const viz = continent_donut(donut_array, palette);
@@ -49,10 +49,10 @@ function continent_donut(donut_array, palette){
     .selectAll()
     .data(pie(donut_array))
     .join("path")
-      .attr("fill", d => color(d.data.count))
-      .attr("d", arc)
+    .attr("fill", d => color(d.data.count))
+    .attr("d", arc)
     .append("title")
-      .text(d => `${d.data.value}: ${d.data.count.toLocaleString()}`);
+    .text(d => `${d.data.value}: ${d.data.count.toLocaleString()}`);
 
       const title = svg.append("text")
       .style("font", "bold 17px sans-serif")
@@ -109,7 +109,7 @@ function continent_donut(donut_array, palette){
       tip.attr("transform", `translate(${mx}, ${my})`)
       .style("visibility","visible")
       value.text(`${d.data.value}`);
-      count.text(`Count: ${d.data.count}`);
+      count.text(`Pct: ${d.data.count} %`);
       })
       .on("mouseout",(evt, d)=>{
         d3.select(evt.target)
