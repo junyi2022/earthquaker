@@ -44,6 +44,7 @@ function initializeMap() {
       const mag = p.source.mag;
       const place = p.source.place;
       const sig = p.source.sig;
+      
       sumPoints['continent'].push(continent);
       sumPoints['mag'].push(mag);
       sumPoints['place'].push(place);
@@ -96,33 +97,27 @@ function initializeMap() {
 
     deckgl.setProps({
       layers: [hexagonLayer],
-      getTooltip: ({ object }) => {
-        if (!object) return null; // No tooltip if no object
-        // console.log(object);
-        const tooltipData = handleTooltip(object)
-        return {
-          html: `
-            <p><strong>Continent:</strong> ${tooltipData['continent']}</p>
-            <p><strong>Place:</strong> Around ${tooltipData['place']}</p>
-            <p><strong>Max Magnitude:</strong> ${tooltipData['mag']}</p>
-            <p><strong>Max Significance:</strong> ${tooltipData['sig']}</p>
-          `,
-          style: {
-            backgroundColor: '#6d738fc9',
-            display: 'flex',
-            flexDirection: 'column',
-            fontSize: '0.8em',
-            color: 'white',
-            fontFamily: 'Helvetica, Arial, sans-serif',
-            borderRadius: '5px',
-          }
-        };
-      },
-      // onHover: ({object}) => {
-      //   if (object) {
-      //     console.log(object);
-      //     object.colorValue = 0;
-      //   }
+      // getTooltip: ({ object }) => {
+      //   if (!object) return null; // No tooltip if no object
+      //   // console.log(object);
+      //   const tooltipData = handleTooltip(object)
+      //   return {
+      //     html: `
+      //       <p><strong>Continent:</strong> ${tooltipData['continent']}</p>
+      //       <p><strong>Place:</strong> Around ${tooltipData['place']}</p>
+      //       <p><strong>Max Magnitude:</strong> ${tooltipData['mag']}</p>
+      //       <p><strong>Max Significance:</strong> ${tooltipData['sig']}</p>
+      //     `,
+      //     style: {
+      //       backgroundColor: '#6d738fc9',
+      //       display: 'flex',
+      //       flexDirection: 'column',
+      //       fontSize: '0.8em',
+      //       color: 'white',
+      //       fontFamily: 'Helvetica, Arial, sans-serif',
+      //       borderRadius: '5px',
+      //     }
+      //   };
       // },
     });
 
